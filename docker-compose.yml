@@ -1,4 +1,4 @@
-version: '3'
+version: '2.4'
 
 services:
   yuque-mcp-server:
@@ -7,18 +7,17 @@ services:
     container_name: yuque-mcp-server
     restart: unless-stopped
     ports:
-      - "${HOST_PORT:-3000}:${INTERNAL_PORT:-3000}"
+      - "6666:3000"
     env_file:
       - .env
     environment:
-      - PORT=${INTERNAL_PORT:-3000}
+      - PORT=3000
       - YUQUE_API_TOKEN=${YUQUE_API_TOKEN}
-      - YUQUE_API_BASE_URL=${YUQUE_API_BASE_URL:-https://www.yuque.com/api/v2}
+      - YUQUE_API_BASE_URL=${YUQUE_API_BASE_URL}
     volumes:
       - ./logs:/usr/src/app/logs
     healthcheck:
-      test: ["CMD", "curl", "-f", "http://localhost:${INTERNAL_PORT:-3000}/health"]
+      test: ["CMD", "curl", "-f", "http://localhost:3000/health"]
       interval: 30s
       timeout: 10s
       retries: 3
-      start_period: 5s
