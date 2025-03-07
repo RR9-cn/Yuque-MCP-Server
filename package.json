@@ -20,8 +20,7 @@
     "start:cli": "cross-env NODE_ENV=cli node dist/index.js",
     "start:http": "node dist/index.js",
     "dev": "cross-env NODE_ENV=development ts-node-dev --respawn src/index.ts",
-    "dev:cli": "cross-env NODE_ENV=development ts-node-dev --respawn src/index.ts --stdio",
-    "prepare": "npm run build && chmod +x ./dist/cli.js"
+    "dev:cli": "cross-env NODE_ENV=development ts-node-dev --respawn src/index.ts --stdio"
   },
   "keywords": [
     "yuque",
