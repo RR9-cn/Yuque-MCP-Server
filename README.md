@@ -36,10 +36,12 @@ This server provides MCP tools for interacting with Yuque's knowledge base platf
    cp .env.example .env
    ```
 
-4. Add your Yuque API token to the `.env` file:
+4. (可选) 在 `.env` 文件中添加你的语雀 API token：
    ```
    YUQUE_API_TOKEN=your_yuque_api_token_here
    ```
+   
+   你也可以选择在连接到服务器时通过查询参数提供 token，而不是在 .env 文件中设置。
 
 ## Usage
 
@@ -94,6 +96,22 @@ This MCP server can be used with AI models that support the Model-Context-Protoc
 1. Start the MCP server
 2. Connect to the server from a compatible client
 3. The AI model can now use the registered tools to interact with Yuque data
+
+### Query Parameters for SSE Endpoint
+
+当连接到 SSE 端点时，你可以通过查询参数（query parameters）覆盖环境配置，这些参数的优先级高于环境变量：
+
+- `accessToken`: 覆盖在 .env 文件中设置的语雀 API 令牌
+- `baseUrl`: 覆盖在 .env 文件中设置的语雀 API 基础 URL
+
+示例：
+```
+http://localhost:3000/sse?accessToken=your_token_here&baseUrl=https://custom.yuque.api/v2
+```
+
+这允许你在不修改 .env 文件的情况下动态配置服务，并且查询参数的优先级高于环境变量。这对于多用户环境或测试不同 API 端点特别有用。
+
+每个 SSE 连接都可以使用不同的配置，这使得同一个服务器实例可以同时为不同的用户或环境提供服务。
 
 ## Development
 

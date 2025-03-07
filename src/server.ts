@@ -322,6 +322,19 @@ export class YuqueMcpServer {
 
     app.get("/sse", async (req: Request, res: Response) => {
       console.log("New SSE connection established");
+      
+      // 获取 query 参数中的 accessToken 和 baseUrl
+      const queryAccessToken = req.query.accessToken as string | undefined;
+      const queryBaseUrl = req.query.baseUrl as string | undefined;
+      
+      // 如果提供了 query 参数，更新 Yuque 服务配置
+      if (queryAccessToken || queryBaseUrl) {
+        console.log(`Using custom configuration: ${queryAccessToken ? 'Token from query, ' : ''}${queryBaseUrl ? 'BaseUrl from query' : ''}`);
+        
+        // 更新服务配置
+        this.yuqueService.updateConfig(queryAccessToken, queryBaseUrl);
+      }
+      
       this.sseTransport = new SSEServerTransport(
         "/messages",
         res as unknown as ServerResponse<IncomingMessage>,

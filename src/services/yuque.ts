@@ -52,15 +52,74 @@ export interface YuqueRepo {
 
 export class YuqueService {
   private client: AxiosInstance;
+  private baseURL: string;
+  private apiToken: string;
 
-  constructor(private apiToken: string, baseURL: string = 'https://www.yuque.com/api/v2') {
+  constructor(apiToken: string = '', baseURL: string = 'https://www.yuque.com/api/v2') {
+    this.apiToken = apiToken;
+    this.baseURL = baseURL;
+    const headers: Record<string, string> = {
+      'Content-Type': 'application/json',
+    };
+    
+    // 只有当 token 不为空时才添加到请求头
+    if (this.apiToken) {
+      headers['X-Auth-Token'] = this.apiToken;
+    }
+    
     this.client = axios.create({
-      baseURL,
-      headers: {
-        'X-Auth-Token': apiToken,
-        'Content-Type': 'application/json',
-      },
+      baseURL: this.baseURL,
+      headers,
     });
+    }
+
+  // 初始化客户端
+  private initClient() {
+    const headers: Record<string, string> = {
+      'Content-Type': 'application/json',
+    };
+    
+    // 只有当 token 不为空时才添加到请求头
+    if (this.apiToken) {
+      headers['X-Auth-Token'] = this.apiToken;
+    }
+    
+    this.client = axios.create({
+      baseURL: this.baseURL,
+      headers,
+    });
+  }
+
+  // Getter methods for token and baseURL
+  getApiToken(): string {
+    return this.apiToken;
+  }
+
+  getBaseUrl(): string {
+    return this.baseURL;
+  }
+  
+  // 更新 API Token
+  updateApiToken(newToken: string): void {
+    this.apiToken = newToken;
+    this.initClient();
+  }
+  
+  // 更新 Base URL
+  updateBaseUrl(newBaseUrl: string): void {
+    this.baseURL = newBaseUrl;
+    this.initClient();
+  }
+  
+  // 同时更新 Token 和 Base URL
+  updateConfig(newToken?: string, newBaseUrl?: string): void {
+    if (newToken) {
+      this.apiToken = newToken;
+    }
+    if (newBaseUrl) {
+      this.baseURL = newBaseUrl;
+    }
+    this.initClient();
   }
 
   // User endpoints

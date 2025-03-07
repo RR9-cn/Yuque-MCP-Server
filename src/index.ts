@@ -8,12 +8,15 @@ export async function startServer(): Promise<void> {
 
   const config = getServerConfig(isStdioMode);
 
+  // 如果没有设置 API token，输出提示信息但不退出
   if (!config.yuqueApiToken) {
-    console.error("Yuque API token is required. Please set YUQUE_API_TOKEN in your environment variables or .env file.");
-    process.exit(1);
+    console.warn("No Yuque API token provided in environment. You can:");
+    console.warn("1. Set YUQUE_API_TOKEN in your .env file");
+    console.warn("2. Provide accessToken via query parameter: ?accessToken=your_token");
+    console.warn("Some API operations will fail without a valid token.");
   }
 
-  const server = new YuqueMcpServer(config.yuqueApiToken, config.yuqueApiBaseUrl);
+  const server = new YuqueMcpServer(config.yuqueApiToken || "", config.yuqueApiBaseUrl);
 
   if (isStdioMode) {
     console.log("Starting Yuque MCP Server in stdio mode...");
