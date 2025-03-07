@@ -22,7 +22,7 @@ This server provides MCP tools for interacting with Yuque's knowledge base platf
 
 1. Clone this repository:
    ```
-   git clone https://github.com/yourusername/Yueque-MCP-Server.git
+   git clone https://github.com/Henryhaoson/Yueque-MCP-Server.git
    cd Yueque-MCP-Server
    ```
 
