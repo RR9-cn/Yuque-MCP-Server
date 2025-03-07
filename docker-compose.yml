@@ -12,7 +12,7 @@ services:
       - .env
     environment:
       - PORT=${INTERNAL_PORT:-3000}
-      - YUQUE_API_TOKEN=${YUQUE_API_TOKEN:-}
+      - YUQUE_API_TOKEN=${YUQUE_API_TOKEN}
       - YUQUE_API_BASE_URL=${YUQUE_API_BASE_URL:-https://www.yuque.com/api/v2}
     volumes:
       - ./logs:/usr/src/app/logs
