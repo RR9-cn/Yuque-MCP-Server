@@ -7,7 +7,7 @@ services:
     container_name: yuque-mcp-server
     restart: unless-stopped
     ports:
-      - "6688:3000"
+      - "4000:3000"
     env_file:
       - .env
     environment:
