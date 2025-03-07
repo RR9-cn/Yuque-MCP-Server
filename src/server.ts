@@ -319,6 +319,15 @@ export class YuqueMcpServer {
 
   async startHttpServer(port: number): Promise<void> {
     const app = express();
+    
+    // 添加健康检查端点
+    app.get('/health', (req, res) => {
+      res.status(200).json({
+        status: 'ok',
+        version: '0.1.0',
+        timestamp: new Date().toISOString()
+      });
+    });
 
     app.get("/sse", async (req: Request, res: Response) => {
       console.log("New SSE connection established");

@@ -75,6 +75,55 @@ npm run start
 npm run start:cli
 ```
 
+### 使用 Docker 部署
+
+本项目提供了 Docker 支持，使您可以轻松地容器化和部署服务器。
+
+#### 使用 Docker Compose（推荐）
+
+1. 构建并启动容器：
+   ```bash
+   docker-compose up -d
+   ```
+
+2. 查看日志：
+   ```bash
+   docker-compose logs -f
+   ```
+
+3. 停止服务：
+   ```bash
+   docker-compose down
+   ```
+
+您可以通过环境变量或在 `.env` 文件中设置配置项：
+```bash
+# .env 文件示例
+PORT=3000
+YUQUE_API_TOKEN=your_token_here
+YUQUE_API_BASE_URL=https://www.yuque.com/api/v2
+```
+
+#### 手动使用 Docker
+
+1. 构建 Docker 镜像：
+   ```bash
+   docker build -t yuque-mcp-server .
+   ```
+
+2. 运行容器：
+   ```bash
+   docker run -d -p 3000:3000 --name yuque-mcp-server yuque-mcp-server
+   ```
+
+3. 使用环境变量：
+   ```bash
+   docker run -d -p 3000:3000 \
+     -e YUQUE_API_TOKEN=your_token_here \
+     -e YUQUE_API_BASE_URL=https://www.yuque.com/api/v2 \
+     --name yuque-mcp-server yuque-mcp-server
+   ```
+
 ### MCP Tools
 
 The Yuque MCP Server provides the following tools:
