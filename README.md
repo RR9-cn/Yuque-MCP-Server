@@ -6,10 +6,11 @@ A Model-Context-Protocol (MCP) server for integrating with Yuque's API. This imp
 
 This server provides MCP tools for interacting with Yuque's knowledge base platform, allowing AI models to:
 
-- Fetch user and document information
-- Create, read, update, and delete documents
-- Search content within Yuque
-- Retrieve repository information
+- 获取用户和文档信息
+- 创建、读取、更新和删除文档
+- 搜索语雀中的内容
+- 获取知识库信息
+- 获取统计数据和分析信息
 
 ## Installation
 
@@ -128,15 +129,22 @@ YUQUE_API_BASE_URL=https://www.yuque.com/api/v2
 
 The Yuque MCP Server provides the following tools:
 
+#### 用户和文档管理
 - `get_current_user` - 获取当前认证用户的信息，包括用户ID、用户名、头像等语雀账号基本信息
 - `get_user_docs` - 获取当前用户的所有知识库文档列表，包括私人和协作文档
 - `get_user_repos` - 获取指定用户的知识库列表，知识库是语雀中组织文档的集合
 - `get_repo_docs` - 获取特定知识库中的所有文档列表，包括文档标题、更新时间等信息
 - `get_doc` - 获取语雀中特定文档的详细内容，包括正文、修改历史和权限信息
-- `create_doc` - 在指定知识库中创建新的语雀文档，支持Markdown格式内容
+- `create_doc` - 在指定知识库中创建新的语雀文档，支持多种格式内容（Markdown、HTML、Lake）
 - `update_doc` - 更新语雀中已存在的文档，可以修改标题、内容或权限设置
 - `delete_doc` - 从语雀知识库中删除指定文档，此操作不可撤销
-- `search` - 在语雀平台中搜索内容，可以按不同类型筛选搜索结果
+- `search` - 在语雀平台中搜索文档或知识库内容，支持范围和作者筛选
+
+#### 团队统计分析
+- `get_group_statistics` - 获取团队的汇总统计数据，包括成员人数、文档数量、阅读量和互动数据等
+- `get_group_member_statistics` - 获取团队成员的统计数据，包括各成员的编辑次数、阅读量、点赞量等
+- `get_group_book_statistics` - 获取团队知识库的统计数据，包括各知识库的文档数、字数、阅读量等
+- `get_group_doc_statistics` - 获取团队文档的统计数据，包括各文档的字数、阅读量、评论量等
 
 ## Integration with AI Models
 
@@ -179,6 +187,19 @@ src/
 ### Adding New Tools
 
 To add a new tool, modify the `registerTools` method in `src/server.ts`.
+
+## API 改进
+
+最近的更新增加了以下功能：
+
+1. **团队统计数据**：添加了获取团队、成员、知识库和文档统计数据的功能，便于分析和监控团队知识库的使用情况。
+
+2. **文档管理增强**：
+   - 支持多种文档格式（Markdown、HTML、Lake）
+   - 完善的文档公开性设置（私密、公开、企业内公开）
+   - 搜索功能支持更多参数和过滤条件
+
+3. **数据类型完善**：更新了接口定义，使其与语雀 OpenAPI 规范保持一致。
 
 ## License
 
