@@ -402,6 +402,29 @@ export class YuqueMcpServer {
         }
       },
     );
+
+    this.server.tool(
+      "get_repo_toc",
+      "从语雀文档中获取文档目录信息",
+      {
+        namespace: z.string().describe("知识库的命名空间，格式为 user/repo"),
+      },
+      async ({namespace}) => {
+        try {
+          Logger.log(`Fetching repo toc for repo: ${namespace}`);
+          const docs = await this.yuqueService.getRepoToc(namespace);
+          Logger.log(`Successfully fetched repo toc for repo: ${namespace}`);
+          return {
+            content: [{ type: "text", text: JSON.stringify(docs) }],
+          };
+        } catch (error) {
+          Logger.error("Error fetching toc for repo:", error);
+          return {
+            content: [{ type: "text", text: `Error fetching toc for repo: ${error}` }],
+          };
+        }
+      },
+    );
   }
 
   async connect(transport: Transport): Promise<void> {
