@@ -1,4 +1,5 @@
 import axios, { AxiosInstance } from 'axios';
+import { Logger } from '../server';
 
 export interface YuqueUser {
   id: number;
@@ -397,8 +398,8 @@ export class YuqueService {
   }
 
   async updateRepoToc(namespace: string, data: {
-    action: 'appendNode' | 'prependNode' | 'editNode' | 'removeNode';
-    action_mode: 'sibling' | 'child';
+    action?: 'appendNode' | 'prependNode' | 'editNode' | 'removeNode';
+    action_mode?: 'sibling' | 'child';
     target_uuid?: string;
     node_uuid?: string;
     doc_ids?: number[];
@@ -408,7 +409,10 @@ export class YuqueService {
     open_window?: number;
     visible?: number;
   }): Promise<YuqueTocItem[]> {
+    Logger.log(`updateRepoToc request :'${data}`);
     const response = await this.client.put(`/repos/${namespace}/toc`, data);
+    Logger.log(`updateRepoToc response :'${response.data}`);
+    debugger;
     return response.data.data;
   }
 
